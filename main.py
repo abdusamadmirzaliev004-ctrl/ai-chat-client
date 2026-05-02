@@ -2,6 +2,14 @@
 AI Chat Client - Kivy Android App
 GitHub Copilot powered chat using device auth flow.
 """
+import ssl
+try:
+    import certifi
+    _SSL_CTX = ssl.create_default_context(cafile=certifi.where())
+except Exception:
+    _SSL_CTX = ssl.create_default_context()
+ssl._create_default_https_context = lambda: _SSL_CTX
+
 import os
 import sys
 import json
@@ -112,7 +120,7 @@ def http_post_json(url, data, headers=None, timeout=30):
         h.update(headers)
     req = urlrequest.Request(url, data=body, headers=h, method="POST")
     try:
-        with urlrequest.urlopen(req, timeout=timeout) as r:
+        with urlrequest.urlopen(req, timeout=timeout, context=_SSL_CTX) as r:
             return r.status, _read_json(r)
     except urlerror.HTTPError as e:
         return e.code, _read_json(e)
@@ -130,7 +138,7 @@ def http_post_form(url, data, headers=None, timeout=30):
         h.update(headers)
     req = urlrequest.Request(url, data=body, headers=h, method="POST")
     try:
-        with urlrequest.urlopen(req, timeout=timeout) as r:
+        with urlrequest.urlopen(req, timeout=timeout, context=_SSL_CTX) as r:
             return r.status, _read_json(r)
     except urlerror.HTTPError as e:
         return e.code, _read_json(e)
@@ -144,7 +152,7 @@ def http_get(url, headers=None, timeout=30):
         h.update(headers)
     req = urlrequest.Request(url, headers=h, method="GET")
     try:
-        with urlrequest.urlopen(req, timeout=timeout) as r:
+        with urlrequest.urlopen(req, timeout=timeout, context=_SSL_CTX) as r:
             return r.status, _read_json(r)
     except urlerror.HTTPError as e:
         return e.code, _read_json(e)
@@ -617,7 +625,7 @@ if _kivy_import_error is None:
             req = urlrequest.Request(COMPLETIONS_URL, data=body,
                                      headers=headers, method="POST")
             try:
-                resp = urlrequest.urlopen(req, timeout=120)
+                resp = urlrequest.urlopen(req, timeout=120, context=_SSL_CTX)
             except urlerror.HTTPError as e:
                 raw = e.read().decode("utf-8", "replace")
                 self._finish(bubble, f"[http {e.code}] {raw[:500]}", False)
