@@ -1,16 +1,16 @@
 [app]
 
 # (str) Title of your application
-title = AI Chat Client
+title = Verdict
 
 # (str) Package name
-package.name = aichatclient
+package.name = verdict
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.aichat
+package.domain = org.verdict
 
 # (str) Application versioning
-version = 1.0.1
+version = 1.0.2
 
 # (str) Source code where the main.py live
 source.dir = .

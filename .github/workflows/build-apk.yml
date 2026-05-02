@@ -63,24 +63,53 @@ jobs:
           touch ~/.android/repositories.cfg
 
       - name: Build APK (debug)
+        shell: bash
         run: |
-          buildozer -v android debug 2>&1 | tee build.log
+          set -euo pipefail
+          attempt=1
+          max=3
+          until buildozer -v android debug 2>&1 | tee build.log; do
+            rc=${PIPESTATUS[0]}
+            echo "::warning::buildozer failed (exit=$rc) on attempt $attempt"
+            if [ $attempt -ge $max ]; then
+              echo "::error::buildozer exhausted $max attempts"
+              exit $rc
+            fi
+            attempt=$((attempt+1))
+            sleep 15
+          done
         env:
           ANDROID_SDK_ROOT: ""
           ANDROID_HOME: ""
 
       - name: Locate APK
         id: find_apk
+        shell: bash
         run: |
-          APK=$(ls bin/*.apk | head -1)
+          set -euo pipefail
+          mkdir -p bin
+          # Buildozer normally drops APKs in ./bin, but if the copy step is skipped
+          # (e.g. due to a partial cache hit) the APK lives under .buildozer.
+          shopt -s globstar nullglob
+          found=( bin/*.apk )
+          if [ ${#found[@]} -eq 0 ]; then
+            echo "bin/ empty; searching .buildozer tree…"
+            mapfile -t found < <(find .buildozer -type f -name '*.apk' 2>/dev/null)
+            for f in "${found[@]}"; do cp -v "$f" bin/; done
+          fi
+          ls -lh bin/
+          APK=$(ls bin/*.apk 2>/dev/null | head -1)
+          if [ -z "$APK" ]; then
+            echo "::error::No APK produced anywhere"
+            exit 1
+          fi
           echo "apk=$APK" >> $GITHUB_OUTPUT
           echo "Built: $APK"
-          ls -lh bin/
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aichatclient-debug-apk-${{ github.sha }}
+          name: verdict-debug-apk-${{ github.sha }}
           path: bin/*.apk
           if-no-files-found: error
           retention-days: 30
