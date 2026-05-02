@@ -80,10 +80,11 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aichatclient-debug-apk
+          name: aichatclient-debug-apk-${{ github.sha }}
           path: bin/*.apk
           if-no-files-found: error
           retention-days: 30
+          overwrite: true
 
       - name: Upload build log on failure
         if: failure()
