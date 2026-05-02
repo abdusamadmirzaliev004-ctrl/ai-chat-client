@@ -67,7 +67,7 @@ android.logcat_filters = *:S python:D
 android.copy_libs = 1
 
 # (str) Android app theme — fullscreen, no title bar, no action bar
-android.apptheme = "@android:style/Theme.NoTitleBar.Fullscreen"
+android.apptheme = @android:style/Theme.NoTitleBar.Fullscreen
 
 [buildozer]
 
