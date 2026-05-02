@@ -1,0 +1,76 @@
+AI Chat Client — Termux Build Instructions
+==========================================
+
+FILES
+  ~/ai-chat-client/main.py          Full Kivy app
+  ~/ai-chat-client/buildozer.spec   Android build config (API 33, arm64-v8a)
+
+----------------------------------------------------------------
+1. INSTALL TERMUX DEPENDENCIES
+----------------------------------------------------------------
+Run in a fresh Termux session:
+
+  pkg update -y && pkg upgrade -y
+  pkg install -y python python-pip git zip unzip openjdk-17 \
+                 clang make cmake autoconf automake libtool pkg-config \
+                 libffi openssl libjpeg-turbo libpng zlib \
+                 rust binutils patchelf which
+
+  # Storage access (so the APK can be copied out)
+  termux-setup-storage
+
+  # Python build tooling
+  pip install --upgrade pip wheel setuptools cython==0.29.36
+  pip install buildozer
+
+----------------------------------------------------------------
+2. (OPTIONAL) RUN ON DESKTOP FIRST TO TEST
+----------------------------------------------------------------
+On a Linux/macOS box with Python 3.10+:
+  pip install kivy
+  python main.py
+
+----------------------------------------------------------------
+3. BUILD THE APK INSIDE TERMUX
+----------------------------------------------------------------
+  cd ~/ai-chat-client
+  buildozer -v android debug
+
+First run downloads the Android SDK, NDK, and python-for-android
+(~2-4 GB, takes 30-90 min on a phone). Subsequent builds are fast.
+
+The signed-debug APK will be at:
+  ~/ai-chat-client/bin/aichatclient-*-arm64-v8a-debug.apk
+
+Install it:
+  cp bin/*.apk /sdcard/Download/
+  # then tap it in the Files app, or:
+  termux-open bin/aichatclient-*-debug.apk
+
+----------------------------------------------------------------
+4. USING THE APP
+----------------------------------------------------------------
+- First launch shows the GitHub device-auth screen.
+- Tap "Start GitHub Login" — you get an 8-character user code.
+- On any device open https://github.com/login/device, enter the
+  code, and authorize.
+- App polls GitHub, saves the token to:
+    ~/.ai_chat_client/token.json   (chmod 600)
+- Chat history persists in:
+    ~/.ai_chat_client/history.json
+- Switch models via the spinner in the top bar.
+
+----------------------------------------------------------------
+TROUBLESHOOTING
+----------------------------------------------------------------
+* "Aidl not found" / SDK errors:
+    rm -rf ~/.buildozer && buildozer android debug
+* Java errors: confirm `java -version` shows 17.
+* Build OOM on low-RAM phones:
+    export GRADLE_OPTS="-Xmx1536m"
+* If openssl recipe fails on Termux, try:
+    pkg install openssl-tool
+    buildozer android clean
+    buildozer android debug
+* Logs from the running APK:
+    pkg install android-tools  # then on a PC: adb logcat | grep python

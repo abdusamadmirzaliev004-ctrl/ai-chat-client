@@ -1,0 +1,21 @@
+# Build artifacts
+bin/
+.buildozer/
+*.apk
+*.aab
+build.log
+
+# Local app data
+.ai_chat_client/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
