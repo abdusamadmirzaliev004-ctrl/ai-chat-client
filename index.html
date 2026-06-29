@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Waste & The Right to Repair</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --cream: #F5F0EB;
+  --mocha: #6B4F3A;
+  --terra: #C47D52;
+  --sage: #7A9E7E;
+  --dark: #3A2E25;
+  --soft-gray: #9C9389;
+  --latte: #E8DED3;
+  --warm-white: #FEFBF7;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--dark);
+  color: var(--dark);
+}
+
+.slide {
+  width: 1280px;
+  height: 720px;
+  margin: 40px auto;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  display: flex;
+  page-break-after: always;
+}
+
+/* Slide number */
+.slide-num {
+  position: absolute;
+  bottom: 24px;
+  right: 32px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--soft-gray);
+  letter-spacing: 2px;
+}
+
+/* Typography */
+h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.15;
+}
+
+h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  color: var(--mocha);
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: var(--soft-gray);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.stat {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  color: var(--terra);
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--soft-gray);
+}
+
+.accent-line {
+  width: 48px;
+  height: 3px;
+  background: var(--terra);
+  border-radius: 2px;
+  margin: 16px 0;
+}
+
+/* Image frames */
+.img-frame {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(59, 46, 37, 0.15);
+}
+
+.img-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Layout helpers */
+.text-panel {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.split-left { flex: 1; }
+.split-right { flex: 1; }
+
+/* ===== SLIDE 1 ===== */
+.slide-1 {
+  flex-direction: row;
+  align-items: center;
+}
+.slide-1 .text-panel {
+  flex: 0.55;
+  padding: 70px;
+}
+.slide-1 .img-side {
+  flex: 0.45;
+  padding: 40px 40px 40px 0;
+}
+.slide-1 .img-frame {
+  height: 100%;
+  border-radius: 20px;
+}
+.slide-1 h1 { font-size: 38px; margin-bottom: 12px; }
+.slide-1 .tag {
+  display: inline-block;
+  background: var(--latte);
+  color: var(--mocha);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+/* ===== SLIDE 2 ===== */
+.slide-2 {
+  flex-direction: row;
+  align-items: center;
+}
+.slide-2 .text-panel { flex: 0.5; padding: 70px; }
+.slide-2 .img-side { flex: 0.5; padding: 40px; }
+.slide-2 .img-frame { height: 100%; border-radius: 20px; }
+.slide-2 h1 { font-size: 34px; margin-bottom: 16px; }
+.slide-2 .detail-box {
+  background: var(--warm-white);
+  border-left: 3px solid var(--terra);
+  padding: 16px 20px;
+  margin-top: 20px;
+  border-radius: 0 8px 8px 0;
+}
+.slide-2 .detail-box p { font-size: 13px; color: var(--mocha); line-height: 1.7; }
+
+/* ===== SLIDE 3 ===== */
+.slide-3 {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.slide-3 .text-panel { flex: 0.55; padding: 60px; }
+.slide-3 .img-side { flex: 0.45; padding: 40px 0 40px 40px; }
+.slide-3 .img-frame { height: 100%; border-radius: 20px; }
+.slide-3 h1 { font-size: 30px; margin-bottom: 14px; }
+.slide-3 .chem-tags { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+.slide-3 .chem-tag {
+  background: var(--latte);
+  color: var(--mocha);
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ===== SLIDE 4 ===== */
+.slide-4 {
+  flex-direction: row;
+  align-items: center;
+}
+.slide-4 .text-panel { flex: 0.5; padding: 70px; }
+.slide-4 .img-side { flex: 0.5; padding: 40px; }
+.slide-4 .img-frame { height: 100%; border-radius: 20px; }
+.slide-4 h1 { font-size: 36px; margin-bottom: 14px; }
+.slide-4 .facts { margin-top: 22px; }
+.slide-4 .fact-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 10px; font-size: 13px; color: var(--mocha);
+}
+.slide-4 .fact-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--sage);
+  margin-top: 5px; flex-shrink: 0;
+}
+
+/* ===== SLIDE 5 ===== */
+.slide-5 {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px;
+}
+.slide-5 .big-num { font-size: 120px; color: var(--terra); font-family: 'Playfair Display', serif; font-weight: 700; line-height: 1; }
+.slide-5 .big-label { font-size: 16px; color: var(--mocha); margin-top: 8px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+.slide-5 .bars { margin-top: 40px; width: 70%; }
+.slide-5 .bar-row { display: flex; align-items: center; margin-bottom: 14px; gap: 14px; }
+.slide-5 .bar { height: 24px; border-radius: 12px; }
+.slide-5 .bar-label { font-size: 12px; color: var(--soft-gray); white-space: nowrap; font-family: 'JetBrains Mono', monospace; }
+.slide-5 .source-card {
+  position: absolute; bottom: 28px; right: 32px;
+  background: var(--warm-white); border: 1px solid var(--latte);
+  padding: 12px 18px; border-radius: 10px; text-align: left;
+}
+.slide-5 .source-card p { font-size: 10px; color: var(--soft-gray); line-height: 1.5; }
+
+/* ===== SLIDE 6 ===== */
+.slide-6 {
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.slide-6 .text-panel { flex: 0.55; padding: 55px; }
+.slide-6 .img-side { flex: 0.45; padding: 40px 0 40px 40px; }
+.slide-6 .img-frame { height: 100%; border-radius: 20px; }
+.slide-6 h1 { font-size: 32px; margin-bottom: 14px; }
+.slide-6 .locations { margin-top: 20px; }
+.slide-6 .loc-item { margin-bottom: 14px; padding-left: 14px; border-left: 3px solid var(--terra); }
+.slide-6 .loc-name { font-weight: 500; color: var(--dark); font-size: 14px; }
+.slide-6 .loc-detail { font-size: 12px; color: var(--soft-gray); margin-top: 2px; line-height: 1.5; }
+
+/* ===== SLIDE 7 ===== */
+.slide-7 {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 70px;
+}
+.slide-7 h1 { font-size: 28px; text-align: center; margin-bottom: 30px; }
+.slide-7 .loop {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; flex-wrap: wrap; max-width: 900px;
+}
+.slide-7 .loop-node {
+  background: var(--warm-white);
+  border: 2px solid var(--latte);
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mocha);
+  text-align: center;
+  min-width: 140px;
+  position: relative;
+}
+.slide-7 .loop-arrow {
+  font-size: 22px; color: var(--terra); margin: 0 8px;
+  font-weight: 300;
+}
+.slide-7 .loop-caption {
+  margin-top: 28px;
+  font-size: 14px;
+  color: var(--soft-gray);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ===== SLIDE 8 ===== */
+.slide-8 {
+  flex-direction: row;
+  align-items: center;
+}
+.slide-8 .text-panel { flex: 0.55; padding: 70px; }
+.slide-8 .img-side { flex: 0.45; padding: 40px 40px 40px 0; }
+.slide-8 .img-frame { height: 100%; border-radius: 20px; position: relative; }
+.slide-8 .img-overlay {
+  position: absolute; inset: 0; background: linear-gradient(135deg, rgba(122,158,126,0.2), transparent);
+  border-radius: 20px;
+}
+.slide-8 h1 { font-size: 36px; margin-bottom: 14px; }
+.slide-8 .quote {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--mocha);
+  margin-top: 20px;
+  padding-left: 16px;
+  border-left: 3px solid var(--sage);
+  line-height: 1.6;
+}
+.slide-8 .actions { margin-top: 24px; }
+.slide-8 .action-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--dark); margin-bottom: 8px;
+}
+.slide-8 .action-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--terra); }
+
+@media print {
+  body { background: white; }
+  .slide { margin: 0; box-shadow: none; border-radius: 0; page-break-after: always; }
+}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 -->
+<div class="slide slide-1">
+  <div class="text-panel">
+    <span class="tag">e-waste &amp; sustainability</span>
+    <h1>The Drawer<br>We All Have.</h1>
+    <div class="accent-line"></div>
+    <p class="subtitle">3.4 dead devices per household. Sitting quietly.<br>Leaking slowly. Waiting for nowhere to go.</p>
+    <p class="mono" style="margin-top: 24px;">E-Waste and the Right to Repair:<br>How Solving a Local Problem Drives Global Action</p>
+  </div>
+  <div class="img-side">
+    <div class="img-frame">
+      <img src="images/drawer.jpg" alt="Tangled cables and electronic clutter">
+    </div>
+  </div>
+  <span class="slide-num">01</span>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide slide-2">
+  <div class="text-panel">
+    <h2>the upgrade cycle</h2>
+    <h1>Every Upgrade Leaves<br>Something Behind.</h1>
+    <div class="accent-line"></div>
+    <p class="subtitle">Planned obsolescence isn't a bug — it's the business model. Phones designed to last 7 years are replaced in 2.5.</p>
+    <div class="detail-box">
+      <p><strong>1.5 billion</strong> smartphones sold yearly — not because 1.5 billion broke.</p>
+      <p style="margin-top:6px;">Glued batteries. Proprietary screws. Software that bricks older hardware on purpose.</p>
+    </div>
+  </div>
+  <div class="img-side">
+    <div class="img-frame">
+      <img src="images/circuit.jpg" alt="Close-up circuit board">
+    </div>
+  </div>
+  <span class="slide-num">02</span>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide slide-3">
+  <div class="text-panel">
+    <h2>the local crisis</h2>
+    <h1>Local Landfills.<br>Local Toxins.<br>Local Consequences.</h1>
+    <div class="accent-line"></div>
+    <p class="subtitle">E-waste is 2% of landfill volume — but <strong>70% of the heavy metals.</strong> And the neighborhoods closest to dumps? Disproportionately low-income.</p>
+    <div class="chem-tags">
+      <span class="chem-tag">Lead (Pb)</span>
+      <span class="chem-tag">Mercury (Hg)</span>
+      <span class="chem-tag">Cadmium (Cd)</span>
+      <span class="chem-tag">BFRs</span>
+    </div>
+    <p class="mono" style="margin-top:18px;">→ soil contamination → groundwater → children</p>
+  </div>
+  <div class="img-side">
+    <div class="img-frame">
+      <img src="images/landfill.jpg" alt="E-waste scrapyard">
+    </div>
+  </div>
+  <span class="slide-num">03</span>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide slide-4">
+  <div class="text-panel">
+    <h2>the movement</h2>
+    <h1>Your Device.<br>Your Choice.<br>Your Right.</h1>
+    <div class="accent-line"></div>
+    <p class="subtitle">The Right to Repair movement says: if you bought it, you own it — and you deserve to fix it.</p>
+    <div class="facts">
+      <div class="fact-item"><div class="fact-dot"></div><span>40+ U.S. states introduced repair legislation by 2023</span></div>
+      <div class="fact-item"><div class="fact-dot"></div><span>EU mandated 10-year spare parts access</span></div>
+      <div class="fact-item"><div class="fact-dot"></div><span>2,500+ community repair cafés worldwide</span></div>
+      <div class="fact-item"><div class="fact-dot"></div><span>Apple forced to launch Self Service Repair (2022)</span></div>
+    </div>
+  </div>
+  <div class="img-side">
+    <div class="img-frame">
+      <img src="images/repair.jpg" alt="Repair lab">
+    </div>
+  </div>
+  <span class="slide-num">04</span>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide slide-5">
+  <h2>the scale</h2>
+  <div class="big-num">53.6M</div>
+  <div class="big-label">metric tonnes · one year · one planet</div>
+  <p class="subtitle" style="margin-top:12px;">The fastest-growing waste stream on Earth.</p>
+  <div class="bars">
+    <div class="bar-row">
+      <div class="bar" style="width:100%; background: var(--terra);"></div>
+      <span class="bar-label">generated — 53.6 Mt</span>
+    </div>
+    <div class="bar-row">
+      <div class="bar" style="width:17.4%; background: var(--sage);"></div>
+      <span class="bar-label">recycled — only 17.4%</span>
+    </div>
+  </div>
+  <p class="mono" style="margin-top:20px;">the gap (44Mt) is heavier than every commercial aircraft ever built. combined.</p>
+  <div class="source-card">
+    <p><strong>Global E-Waste Monitor 2020</strong></p>
+    <p>Forti, Baldé, Kuehr & Bel</p>
+    <p>UNU/UNITAR-SCYCLE · ITU · ISWA</p>
+  </div>
+  <span class="slide-num">05</span>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="slide slide-6">
+  <div class="text-panel">
+    <h2>the global cost</h2>
+    <h1>What We Discard,<br>Others Inherit.</h1>
+    <div class="accent-line"></div>
+    <p class="subtitle">Our "recycled" electronics don't disappear. They travel to where regulations are weakest and labor is cheapest.</p>
+    <div class="locations">
+      <div class="loc-item">
+        <div class="loc-name">Agbogbloshie, Ghana</div>
+        <div class="loc-detail">Children burn circuit boards for copper. No masks. No gloves. Ranked among world's 10 most polluted places.</div>
+      </div>
+      <div class="loc-item">
+        <div class="loc-name">Guiyu, China</div>
+        <div class="loc-detail">Groundwater lead levels 190× safe limits. Miscarriage rates 6× national average.</div>
+      </div>
+      <div class="loc-item">
+        <div class="loc-name">New Delhi, India</div>
+        <div class="loc-detail">Acid baths in residential streets to extract gold from motherboards.</div>
+      </div>
+    </div>
+  </div>
+  <div class="img-side">
+    <div class="img-frame">
+      <img src="images/agbog.jpg" alt="Agbogbloshie e-waste site">
+    </div>
+  </div>
+  <span class="slide-num">06</span>
+</div>
+
+<!-- SLIDE 7 -->
+<div class="slide slide-7">
+  <h2>the system</h2>
+  <h1>The Local–Global Feedback Loop</h1>
+  <div class="loop">
+    <div class="loop-node">Local repair<br>culture grows</div>
+    <span class="loop-arrow">→</span>
+    <div class="loop-node">Demand for new<br>devices drops</div>
+    <span class="loop-arrow">→</span>
+    <div class="loop-node">Manufacturers face<br>market pressure</div>
+    <span class="loop-arrow">→</span>
+    <div class="loop-node">Production &<br>mining decrease</div>
+    <span class="loop-arrow">→</span>
+    <div class="loop-node">Global e-waste<br>load reduced</div>
+    <span class="loop-arrow">↩</span>
+  </div>
+  <p class="loop-caption">"Individual action → systemic pressure → structural change"</p>
+  <p class="mono" style="margin-top:14px;">France's repairability index shifted consumer behavior within 18 months of implementation.</p>
+  <span class="slide-num">07</span>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="slide slide-8">
+  <div class="text-panel">
+    <h2>the call</h2>
+    <h1>Reimagine<br>the Drawer.</h1>
+    <div class="accent-line"></div>
+    <div class="quote">"The most sustainable device is the one you already own."</div>
+    <div class="actions">
+      <div class="action-item"><div class="action-dot"></div><span>Support repair legislation in your state</span></div>
+      <div class="action-item"><div class="action-dot"></div><span>Find your local repair café (repaircafe.org)</span></div>
+      <div class="action-item"><div class="action-dot"></div><span>Choose repairable products (check ifixit.com scores)</span></div>
+      <div class="action-item"><div class="action-dot"></div><span>Before replacing — search "[device] iFixit"</span></div>
+    </div>
+    <p class="mono" style="margin-top:22px;">the local fix is the global fix._</p>
+  </div>
+  <div class="img-side">
+    <div class="img-frame">
+      <img src="images/drawer2.jpg" alt="Electronics workspace">
+      <div class="img-overlay"></div>
+    </div>
+  </div>
+  <span class="slide-num">08</span>
+</div>
+
+</body>
+</html>
